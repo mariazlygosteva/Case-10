@@ -1,7 +1,6 @@
 # Case-study #10
 # Developers: Sedelnikova P., Simonov A., Fedotova M.
 #
-# локализатор, комменты на одной линии, проверить длину строк
 """
 Main module of the financial assistant.
 Combines all components of the accounting and analytics system.
