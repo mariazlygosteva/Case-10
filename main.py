@@ -14,8 +14,10 @@ from typing import Dict, List, Any
 # Import our modules.
 from data_importer import import_financial_data, generate_sample_data
 from categorizer import categorize_all_transactions, print_categorization_report
-from analyzer import calculate_basic_stats, calculate_by_category, generate_analytics_report
-from budget_planner import analyze_historical_spending, create_budget_template, generate_budget_recommendations
+from analyzer import (calculate_basic_stats, calculate_by_category,
+                     generate_analytics_report)
+from budget_planner import (analyze_historical_spending,
+                           create_budget_template, generate_budget_recommendations)
 import local as ru
 
 # Global variables for state management.
@@ -68,7 +70,8 @@ def load_data(filename: str = None, use_sample: bool = False) -> bool:
 
 def process_data() -> None:
     """Processes data: categorization, analysis, planning."""
-    global categorized_transactions, stats, category_stats, budget_analysis, budget_template
+    global categorized_transactions, stats, category_stats, budget_analysis,\
+        budget_template
 
     if not transactions:
         print('❌ Нет данных для обработки')
@@ -172,7 +175,8 @@ def print_category_analysis() -> None:
     for category, amount in sorted_categories:
         percentage = (abs(amount) / total_expenses) * 100
         emoji = get_category_emoji(category)
-        print(f"  {emoji} {category}: {ru.format_currency(abs(amount))} ({percentage:.1f}%)")
+        print(f"  {emoji} {category}: {ru.format_currency(abs(amount))} ("
+              f"{percentage:.1f}%)")
 
 
 def print_budget_recommendations() -> None:
@@ -180,7 +184,8 @@ def print_budget_recommendations() -> None:
     print(f"\n{ru.TEXTS_RU['budget_recommendations']}:")
     print("-" * 40)
 
-    recommendations = generate_budget_recommendations(budget_analysis, category_stats)
+    recommendations = generate_budget_recommendations(
+        budget_analysis, category_stats)
 
     for rec in recommendations:
         print(f"  {rec}")
@@ -249,7 +254,8 @@ def save_results(filename: str = None) -> None:
     # Main indicators.
     file_obj.write("MAIN INDICATORS:\n")
     file_obj.write(f"Income: {ru.format_currency(stats.get('total_income', 0))}\n")
-    file_obj.write(f"Expenses: {ru.format_currency(stats.get('total_expenses', 0))}\n")
+    file_obj.write(f"Expenses: {ru.format_currency(stats.get(
+        'total_expenses', 0))}\n")
     file_obj.write(f"Balance: {ru.format_currency(stats.get('balance', 0))}\n\n")
 
     # Expense categories.
@@ -259,9 +265,11 @@ def save_results(filename: str = None) -> None:
 
     for category, amount in expenses_by_category.items():
         percentage = (abs(amount) / total_expenses) * 100
-        file_obj.write(f"{category}: {ru.format_currency(abs(amount))} ({percentage:.1f}%)\n")
+        file_obj.write(f"{category}: {ru.format_currency(abs(amount))} ("
+                       f"{percentage:.1f}%)\n")
 
-    file_obj.write(f"\nReport saved: {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
+    file_obj.write(f"\nReport saved: {datetime.now().strftime(
+        '%Y-%m-%d %H:%M')}\n")
     file_obj.close()
 
     print(ru.TEXTS_RU['report_saved'].format(filename))
