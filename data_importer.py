@@ -138,9 +138,11 @@ def _determine_amount_sign(amount: float, row: dict) -> float:
     sign_value = _get_first_matching_value(row, sign_fields).lower()
 
     match sign_value:
-        case sign if any(word in sign for word in ['debit', 'расход', 'списание', '-']):
+        case sign if any(word in sign for word in [
+            'debit', 'расход', 'списание', '-']):
             return -abs(amount)
-        case sign if any(word in sign for word in ['credit', 'доход', 'пополнение', '+']):
+        case sign if any(word in sign for word in [
+            'credit', 'доход', 'пополнение', '+']):
             return abs(amount)
         case _:
             return amount
@@ -328,7 +330,8 @@ def import_financial_data(filename: str) -> list:
             transaction.get('amount') != 0)
     ]
 
-    print(f"Successfully imported {len(valid_transactions)} transactions from {filename}")
+    print(f"Successfully imported {len(valid_transactions)} transactions from {
+        filename}")
     return valid_transactions
 
 
